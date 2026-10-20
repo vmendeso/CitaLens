@@ -14,7 +14,7 @@ docker compose --profile test run --rm integration-tests
 
 O Compose exige `.env`. Gere-o com os scripts do README; nenhuma credencial real está nas imagens. A criação de roles e as migrations ocorre no processo único `migrate`. Dependências usam `service_healthy` e `service_completed_successfully`, conforme [ordenação oficial do Compose](https://docs.docker.com/compose/how-tos/startup-order/).
 
-O LLM padrão usa `LLM_PROVIDER=groq`, `LLM_MODEL=openai/gpt-oss-120b` e `LLM_BASE_URL=https://api.groq.com/openai/v1`. Preencha `GROQ_API_KEY` no `.env` e execute `docker compose up --build -d` para aplicar a integração. A chave OpenAI não autentica chamadas Groq. Sem a chave Groq, a análise real retorna `INCONCLUSIVE` com a limitação registrada. A demonstração usa anotações sintéticas para o parecer.
+O LLM padrão usa `LLM_PROVIDER=groq`, `LLM_MODEL=qwen/qwen3.8-27b` e `LLM_BASE_URL=https://api.groq.com/openai/v1`. Preencha `GROQ_API_KEY` no `.env` e execute `docker compose up --build -d` para aplicar a integração. A chave OpenAI não autentica chamadas Groq. Sem a chave Groq, a análise real retorna `INCONCLUSIVE` com a limitação registrada. A demonstração usa anotações sintéticas para o parecer.
 
 Embeddings locais ficam habilitados com `EMBEDDING_PROVIDER=ollama`, modelo `bge-m3:567m`, 1.024 dimensões e versão `2`. O serviço Ollama incluído no Compose usa CPU, com limites de 4 GB de memória e quatro CPUs, e não publica porta no host. `ollama-pull` aguarda o servidor e baixa os pesos antes do início de `vector-service`; a primeira execução exige acesso ao catálogo de modelos e pode demorar. Os pesos ficam em `ollama-data` e são reaproveitados nas próximas inicializações. Não é necessária chave paga para embeddings.
 
