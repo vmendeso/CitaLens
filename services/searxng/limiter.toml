@@ -1,0 +1,7 @@
+# SearXNG initializes botdetection even with server.limiter=false. The instance
+# is private to Compose; do not trust forwarding headers from arbitrary networks.
+[botdetection]
+trusted_proxies = ["127.0.0.1/32", "::1/128"]
+
+[botdetection.ip_limit]
+link_token = false

@@ -1,0 +1,23 @@
+{
+  "pages_extracted": 3,
+  "references_extracted": 1,
+  "occurrences_detected": 3,
+  "resolved_occurrences": 3,
+  "extraction": {
+    "expected_sentences": 3,
+    "complete_sentences_recovered": 3
+  },
+  "binding": {
+    "expected_occurrences": 3,
+    "correct_bindings": 3
+  },
+  "classification": {
+    "measured": false,
+    "reason": "Pareceres anotados manualmente; nenhuma inferência de modelo foi executada pelo gerador."
+  },
+  "rendering": {
+    "pages": 4,
+    "text_blocks_outside_page": 0
+  },
+  "semantic_assessments": "Anotações determinísticas de demonstração; nenhuma chamada LLM/web."
+}

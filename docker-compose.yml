@@ -1,0 +1,397 @@
+name: citalens
+
+x-api: &api
+  env_file: .env
+  restart: unless-stopped
+  init: true
+  networks: [internal]
+  security_opt: [no-new-privileges:true]
+  cap_drop: [ALL]
+  mem_limit: 1g
+  cpus: 1.0
+  pids_limit: 128
+  healthcheck:
+    test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health/ready', timeout=5)"]
+    interval: 15s
+    timeout: 8s
+    retries: 6
+    start_period: 30s
+  depends_on:
+    migrate:
+      condition: service_completed_successfully
+
+x-api-env: &api-env
+  DATABASE_URL: postgresql+psycopg://api_writer:${API_DB_PASSWORD:?Configure .env}@postgres:5432/citalens
+  BROKER_URL: amqp://citalens:${RABBITMQ_PASSWORD:?Configure .env}@rabbitmq:5672//
+
+x-worker: &worker
+  <<: *api
+  image: citalens/backend-api:1.0.0
+  build:
+    context: .
+    dockerfile: services/backend_api/Dockerfile
+  environment: *api-env
+  mem_limit: 1536m
+  healthcheck:
+    test: ["CMD", "python", "-c", "import os,socket; from services.backend_api.worker import celery_app; assert celery_app.control.inspect(destination=[os.environ['WORKER_NAME']+'@'+socket.gethostname()], timeout=5).ping()"]
+    interval: 30s
+    timeout: 10s
+    retries: 3
+  depends_on:
+    migrate:
+      condition: service_completed_successfully
+    rabbitmq:
+      condition: service_healthy
+    knowledge-service:
+      condition: service_healthy
+
+services:
+  postgres:
+    image: postgres:16.9-bookworm
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: citalens
+      POSTGRES_USER: migrator
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Execute scripts/setup-env.ps1 ou scripts/setup_env.py}
+    volumes: [postgres-data:/var/lib/postgresql/data]
+    networks: [internal]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U migrator -d citalens"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    mem_limit: 1g
+
+  rabbitmq:
+    image: rabbitmq:4.1.2-management-alpine
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: citalens
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:?Configure .env}
+    volumes: [rabbitmq-data:/var/lib/rabbitmq]
+    networks: [internal]
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 12
+    mem_limit: 768m
+
+  weaviate:
+    image: cr.weaviate.io/semitechnologies/weaviate:1.32.9
+    restart: unless-stopped
+    command: ["--host", "0.0.0.0", "--port", "8080", "--scheme", "http"]
+    environment:
+      PERSISTENCE_DATA_PATH: /var/lib/weaviate
+      DEFAULT_VECTORIZER_MODULE: none
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: "false"
+      AUTHENTICATION_APIKEY_ENABLED: "true"
+      AUTHENTICATION_APIKEY_ALLOWED_KEYS: ${WEAVIATE_API_KEY:?Configure .env}
+      AUTHENTICATION_APIKEY_USERS: citalens-vector
+      AUTHORIZATION_ADMINLIST_ENABLED: "true"
+      AUTHORIZATION_ADMINLIST_USERS: citalens-vector
+      CLUSTER_HOSTNAME: node1
+      QUERY_DEFAULTS_LIMIT: "25"
+      GRPC_PORT: "50051"
+      DISABLE_TELEMETRY: "true"
+    volumes: [weaviate-data:/var/lib/weaviate]
+    networks: [internal]
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:8080/v1/.well-known/ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+    mem_limit: 2g
+
+  ollama:
+    image: ollama/ollama:0.40.6
+    restart: unless-stopped
+    environment:
+      OLLAMA_HOST: 0.0.0.0:11434
+      OLLAMA_KEEP_ALIVE: 30m
+      OLLAMA_MAX_LOADED_MODELS: "1"
+      OLLAMA_NUM_PARALLEL: "1"
+    volumes: [ollama-data:/root/.ollama]
+    networks: [internal, egress]
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+    mem_limit: 4g
+    cpus: 4.0
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 15s
+
+  ollama-pull:
+    image: ollama/ollama:0.40.6
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+      EMBEDDING_PROVIDER: ${EMBEDDING_PROVIDER:-ollama}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-bge-m3:567m}
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - 'if [ "$$EMBEDDING_PROVIDER" = "ollama" ]; then exec ollama pull "$$EMBEDDING_MODEL"; fi'
+    networks: [internal]
+    restart: "no"
+    depends_on:
+      ollama:
+        condition: service_healthy
+
+  searxng:
+    image: searxng/searxng@sha256:5ed0323b5f5f8701264ef65e239a2bd83cb57098f2b971fa30bf79c06eeae271
+    restart: unless-stopped
+    user: "977:977"
+    environment:
+      SEARXNG_SECRET: ${SEARXNG_SECRET_KEY:?Configure SEARXNG_SECRET_KEY no .env}
+      SEARXNG_BASE_URL: http://searxng:8080/
+      FORCE_OWNERSHIP: "false"
+    volumes:
+      - ./services/searxng/settings.yml:/etc/searxng/settings.yml:ro
+      - ./services/searxng/limiter.toml:/etc/searxng/limiter.toml:ro
+      - searxng-data:/var/cache/searxng
+    networks: [internal, egress]
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+    mem_limit: 512m
+    cpus: 1.0
+    healthcheck:
+      test: ["CMD", "/usr/local/searxng/.venv/bin/python", "-c", "import urllib.request; urllib.request.urlopen(urllib.request.Request('http://127.0.0.1:8080/healthz', headers={'X-Real-IP':'127.0.0.1'}), timeout=5)"]
+      interval: 15s
+      timeout: 8s
+      retries: 6
+      start_period: 30s
+
+  migrate:
+    image: citalens/backend-api:1.0.0
+    build:
+      context: .
+      dockerfile: services/backend_api/Dockerfile
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://migrator:${POSTGRES_PASSWORD}@postgres:5432/citalens
+    command: ["python", "-m", "migrations.bootstrap"]
+    networks: [internal]
+    restart: "no"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  backend-api:
+    <<: *api
+    image: citalens/backend-api:1.0.0
+    build:
+      context: .
+      dockerfile: services/backend_api/Dockerfile
+    environment: *api-env
+    ports: ["127.0.0.1:8000:8000"]
+    networks: [internal, gateway]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      upload-service:
+        condition: service_healthy
+      knowledge-service:
+        condition: service_healthy
+
+  upload-service:
+    <<: *api
+    image: citalens/upload-service:1.0.0
+    build:
+      context: .
+      dockerfile: services/upload_service/Dockerfile
+    environment:
+      DATABASE_URL: postgresql+psycopg://upload_writer:${UPLOAD_DB_PASSWORD}@postgres:5432/citalens
+    volumes: [file-data:/data/files]
+
+  ocr-service:
+    <<: *api
+    image: citalens/ocr-service:1.0.0
+    build:
+      context: .
+      dockerfile: services/ocr_service/Dockerfile
+    mem_limit: 2g
+    cpus: 2.0
+    pids_limit: 96
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      upload-service:
+        condition: service_healthy
+
+  chunk-service:
+    <<: *api
+    image: citalens/chunk-service:1.0.0
+    build:
+      context: .
+      dockerfile: services/chunk_service/Dockerfile
+
+  vector-service:
+    <<: *api
+    image: citalens/vector-service:1.0.0
+    build:
+      context: .
+      dockerfile: services/vector_service/Dockerfile
+    networks: [internal, egress]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      weaviate:
+        condition: service_healthy
+      ollama-pull:
+        condition: service_completed_successfully
+
+  knowledge-service:
+    <<: *api
+    image: citalens/knowledge-service:1.0.0
+    build:
+      context: .
+      dockerfile: services/knowledge_service/Dockerfile
+    environment:
+      DATABASE_URL: postgresql+psycopg://knowledge_writer:${KNOWLEDGE_DB_PASSWORD}@postgres:5432/citalens
+    mem_limit: 2g
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      ocr-service:
+        condition: service_healthy
+      chunk-service:
+        condition: service_healthy
+      vector-service:
+        condition: service_healthy
+      rag-service:
+        condition: service_healthy
+      llm-service:
+        condition: service_healthy
+      web-search-service:
+        condition: service_healthy
+
+  rag-service:
+    <<: *api
+    image: citalens/rag-service:1.0.0
+    build:
+      context: .
+      dockerfile: services/rag_service/Dockerfile
+
+  llm-service:
+    <<: *api
+    image: citalens/llm-service:1.0.0
+    build:
+      context: .
+      dockerfile: services/llm_service/Dockerfile
+    networks: [internal, egress]
+
+  web-search-service:
+    <<: *api
+    image: citalens/web-search-service:1.0.0
+    build:
+      context: .
+      dockerfile: services/web_search_service/Dockerfile
+    networks: [internal, egress]
+    mem_limit: 1536m
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      searxng:
+        condition: service_healthy
+
+  report-service:
+    <<: *api
+    image: citalens/report-service:1.0.0
+    build:
+      context: .
+      dockerfile: services/report_service/Dockerfile
+
+  worker-ingest:
+    <<: *worker
+    environment:
+      <<: *api-env
+      WORKER_NAME: ingest
+    command: ["celery", "-A", "services.backend_api.worker:celery_app", "worker", "-l", "INFO", "-Q", "ingest,analysis", "--concurrency=1", "--hostname=ingest@%h"]
+
+  worker-research:
+    <<: *worker
+    environment:
+      <<: *api-env
+      WORKER_NAME: research
+    command: ["celery", "-A", "services.backend_api.worker:celery_app", "worker", "-l", "INFO", "-Q", "sources,evaluation", "--concurrency=2", "--hostname=research@%h"]
+
+  worker-reports:
+    <<: *worker
+    environment:
+      <<: *api-env
+      WORKER_NAME: reports
+    command: ["celery", "-A", "services.backend_api.worker:celery_app", "worker", "-l", "INFO", "-Q", "reports,maintenance", "--concurrency=1", "--hostname=reports@%h"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      rabbitmq:
+        condition: service_healthy
+      report-service:
+        condition: service_healthy
+
+  outbox:
+    <<: *worker
+    command: ["python", "-m", "services.backend_api.outbox"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import os,time; assert time.time()-os.stat('/tmp/citalens-outbox-heartbeat').st_mtime < 30"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
+  frontend:
+    image: citalens/frontend:1.0.0
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    restart: unless-stopped
+    ports: ["127.0.0.1:8080:80"]
+    networks: [gateway]
+    depends_on:
+      backend-api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1/"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  integration-tests:
+    profiles: [test]
+    image: citalens/backend-api:1.0.0
+    env_file: .env
+    environment:
+      RUN_INTEGRATION: "1"
+      INTEGRATION_API_URL: http://backend-api:8000
+      INTEGRATION_ADMIN_DATABASE_URL: postgresql+psycopg://migrator:${POSTGRES_PASSWORD}@postgres:5432/citalens
+      DATABASE_URL: postgresql+psycopg://migrator:${POSTGRES_PASSWORD}@postgres:5432/citalens
+      BROKER_URL: amqp://citalens:${RABBITMQ_PASSWORD}@rabbitmq:5672//
+    command: ["python", "-m", "pytest", "-q", "tests"]
+    networks: [internal]
+    depends_on:
+      backend-api:
+        condition: service_healthy
+      worker-ingest:
+        condition: service_started
+      worker-research:
+        condition: service_started
+      worker-reports:
+        condition: service_started
+      outbox:
+        condition: service_started
+
+networks:
+  internal:
+    internal: true
+  gateway:
+  egress:
+
+volumes:
+  postgres-data:
+  rabbitmq-data:
+  weaviate-data:
+  file-data:
+  ollama-data:
+  searxng-data:

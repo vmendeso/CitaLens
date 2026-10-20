@@ -1,0 +1,1 @@
+"""Bibliographic discovery service."""

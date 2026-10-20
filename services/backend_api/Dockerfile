@@ -1,0 +1,14 @@
+FROM python:3.12.11-slim-bookworm
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+WORKDIR /app
+COPY requirements.lock requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.lock && useradd --uid 10001 --create-home app
+COPY packages ./packages
+COPY services ./services
+COPY migrations ./migrations
+COPY alembic.ini pyproject.toml ./
+COPY scripts ./scripts
+COPY tests ./tests
+USER app
+EXPOSE 8000
+CMD ["uvicorn", "services.backend_api.main:app", "--host", "0.0.0.0", "--port", "8000"]

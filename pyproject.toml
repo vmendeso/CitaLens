@@ -1,0 +1,12 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+markers = [
+  "integration: requires running Docker Compose services",
+  "ocr: requires Tesseract with Portuguese and English",
+]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"

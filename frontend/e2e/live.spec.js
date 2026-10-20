@@ -1,0 +1,33 @@
+import { expect, test } from '@playwright/test';
+
+test('Compose real: fixture demo até relatório PDF', async ({ page, request }) => {
+  test.skip(!process.env.CITALENS_E2E_LIVE, 'Requer Compose em execução e CITALENS_E2E_LIVE=1. Não usa mocks.');
+  test.setTimeout(240000);
+  const email = `e2e-${Date.now()}@example.org`;
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Criar conta', exact: true }).click();
+  await page.getByLabel('Nome', { exact: true }).fill('Pesquisador de teste E2E');
+  await page.getByLabel('E-mail', { exact: true }).fill(email);
+  await page.getByLabel('Senha', { exact: true }).fill('Test-only-password-2026');
+  await page.getByRole('button', { name: 'Criar minha conta' }).click();
+  await expect(page.getByRole('heading', { name: 'Sua biblioteca de revisões' })).toBeVisible();
+  const token = await page.evaluate(() => JSON.parse(sessionStorage.getItem('citalens-session')).access_token);
+  const fixture = await request.get('/api/v1/demo/manuscript', { headers: { Authorization: `Bearer ${token}` } });
+  expect(fixture.ok()).toBeTruthy();
+  const bytes = await fixture.body();
+  expect(bytes.subarray(0, 5).toString()).toBe('%PDF-');
+  await page.getByRole('button', { name: 'Enviar meu primeiro PDF' }).click();
+  await page.getByLabel('Selecionar manuscrito PDF').setInputFiles({ name: 'demonstracao-e2e.pdf', mimeType: 'application/pdf', buffer: bytes });
+  await page.getByRole('radio', { name: /Demonstração/ }).check();
+  await page.getByRole('button', { name: 'Iniciar análise', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Baixar relatório' })).toBeVisible({ timeout: 180000 });
+  await page.getByRole('button', { name: 'Achados', exact: true }).click();
+  await expect(page.getByRole('button', { name: /Examinar evidências/ }).first()).toBeVisible();
+  const downloadPromise = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Baixar relatório' }).click();
+  const report = await downloadPromise;
+  const stream = await report.createReadStream();
+  const chunks = [];
+  for await (const chunk of stream) chunks.push(chunk);
+  expect(Buffer.concat(chunks).subarray(0, 5).toString()).toBe('%PDF-');
+});

@@ -1,0 +1,27 @@
+{
+  "license": "CC0-1.0: conteúdo sintético criado neste repositório",
+  "demo_is_not_real_research": true,
+  "claims": [
+    "Silva (2024) observou aumento de 12% na atenção em 40 adultos após pausas de cinco minutos.",
+    "Silva (2024) demonstrou que pausas de cinco minutos causam aumento de 12% na atenção de toda a população.",
+    "Silva (2024) observou redução de 12% na atenção em 40 adultos após pausas de cinco minutos."
+  ],
+  "reference": "[1] SILVA, Ana. Efeito de pausas na atenção: estudo sintético. CitaLens, 2024. DOI: 10.0000/citalens.demo.",
+  "source": "Estudo sintético com 40 adultos observou aumento de 12% na atenção após pausas de cinco minutos. O desenho observacional não demonstra causalidade. Os resultados não devem ser generalizados para crianças ou para toda a população.",
+  "expected": {
+    "pages": 3,
+    "references": 1,
+    "occurrences": 3,
+    "printed_labels": [
+      "i",
+      "1",
+      "2"
+    ],
+    "semantic_states": [
+      "SUPPORTED",
+      "PARTIALLY_SUPPORTED",
+      "CONTRADICTED"
+    ]
+  },
+  "ocr": "scanned.pdf e mixed.pdf requerem Tesseract real para validar OCR."
+}

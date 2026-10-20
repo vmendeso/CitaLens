@@ -1,0 +1,625 @@
+{
+  "snapshot_version": 1,
+  "created_at": "2026-10-20T12:00:00-03:00",
+  "demo": true,
+  "document": {
+    "title": "Manuscrito sintético: pausas e atenção",
+    "version": 1,
+    "sha256": "638f0e75a5acdb1213a4f1c2444e2c3541246298eeee3818e0553b05fda973ba"
+  },
+  "analysis": {
+    "id": "synthetic-example-not-a-real-analysis"
+  },
+  "config": {
+    "mode": "demo",
+    "citation_style": "não validado",
+    "language": "pt-BR"
+  },
+  "pages": [
+    {
+      "physical_index": 0,
+      "physical_page_number": 1,
+      "printed_label": "i",
+      "raw_text": "DEMONSTRAÇÃO SINTÉTICA\n\nDocumento criado exclusivamente para testes.\n\nSilva (2024) observou aumento de 12% na atenção em 40 adultos após pausas de cinco\n\nminutos.\n\ni\n",
+      "normalized_text": "DEMONSTRAÇÃO SINTÉTICA\nDocumento criado exclusivamente para testes.\n\nSilva (2024) observou aumento de 12% na atenção em 40 adultos após pausas de cinco\nminutos.\n\ni",
+      "extraction_method": "NATIVE",
+      "blocks": [
+        {
+          "bbox": [
+            60.0,
+            55.000022888183594,
+            228.68399047851562,
+            71.48802185058594
+          ],
+          "order": 0,
+          "text": "DEMONSTRAÇÃO SINTÉTICA\n",
+          "offset_start": 0,
+          "offset_end": 22,
+          "coordinate_space": "pdf_points",
+          "approximate": false,
+          "is_folio": false
+        },
+        {
+          "bbox": [
+            60.0,
+            74.3499984741211,
+            309.43194580078125,
+            90.83799743652344
+          ],
+          "order": 1,
+          "text": "Documento criado exclusivamente para testes.\n",
+          "offset_start": 23,
+          "offset_end": 67,
+          "coordinate_space": "pdf_points",
+          "approximate": false,
+          "is_folio": false
+        },
+        {
+          "bbox": [
+            60.0,
+            113.05001068115234,
+            531.5878295898438,
+            129.5380096435547
+          ],
+          "order": 2,
+          "text": "Silva (2024) observou aumento de 12% na atenção em 40 adultos após pausas de cinco\n",
+          "offset_start": 69,
+          "offset_end": 151,
+          "coordinate_space": "pdf_points",
+          "approximate": false,
+          "is_folio": false
+        },
+        {
+          "bbox": [
+            60.0,
+            132.39999389648438,
+            105.34799194335938,
+            148.8879852294922
+          ],
+          "order": 3,
+          "text": "minutos.\n",
+          "offset_start": 152,
+          "offset_end": 160,
+          "coordinate_space": "pdf_points",
+          "approximate": false,
+          "is_folio": false
+        },
+        {
+          "bbox": [
+            290.0,
+            794.25,
+            292.2200012207031,
+            807.989990234375
+          ],
+          "order": 4,
+          "text": "i\n",
+          "offset_start": 162,
+          "offset_end": 163,
+          "coordinate_space": "pdf_points",
+          "approximate": false,
+          "is_folio": true
+        }
+      ],
+      "quality": {
+        "characters": 163,
+        "replacement_fraction": 0.0,
+        "ocr_confidence": null,
+        "mixed_image_content": false,
+        "reading_order": "geometric",
+        "offset_basis": "normalized_text"
+      },
+      "status": "ANALYZED",
+      "error": null,
+      "extraction_status": "EXTRACTED",
+      "citation_count": 1,
+      "mapping_complete": true
+    },
+    {
+      "physical_index": 1,
+      "physical_page_number": 2,
+      "printed_label": "1",
+      "raw_text": "Silva (2024) demonstrou que pausas de cinco minutos causam aumento de 12% na\n\natenção de toda a população.\n\nSilva (2024) observou redução de 12% na atenção em 40 adultos após pausas de cinco\n\nminutos.\n\n1\n",
+      "normalized_text": "Silva (2024) demonstrou que pausas de cinco minutos causam aumento de 12% na\natenção de toda a população.\n\nSilva (2024) observou redução de 12% na atenção em 40 adultos após pausas de cinco\nminutos.\n\n1",
+      "extraction_method": "NATIVE",
+      "blocks": [
+        {
+          "bbox": [
+            60.0,
+            55.000022888183594,
+            505.5478820800781,
+            71.48802185058594
+          ],
+          "order": 0,
+          "text": "Silva (2024) demonstrou que pausas de cinco minutos causam aumento de 12% na\n",
+          "offset_start": 0,
+          "offset_end": 76,
+          "coordinate_space": "pdf_points",
+          "approximate": false,
+          "is_folio": false
+        },
+        {
+          "bbox": [
+            60.0,
+            74.3499984741211,
+            218.1119384765625,
+            90.83799743652344
+          ],
+          "order": 1,
+          "text": "atenção de toda a população.\n",
+          "offset_start": 77,
+          "offset_end": 105,
+          "coordinate_space": "pdf_points",
+          "approximate": false,
+          "is_folio": false
+        },
+        {
+          "bbox": [
+            60.0,
+            113.05001068115234,
+            528.2518920898438,
+            129.5380096435547
+          ],
+          "order": 2,
+          "text": "Silva (2024) observou redução de 12% na atenção em 40 adultos após pausas de cinco\n",
+          "offset_start": 107,
+          "offset_end": 189,
+          "coordinate_space": "pdf_points",
+          "approximate": false,
+          "is_folio": false
+        },
+        {
+          "bbox": [
+            60.0,
+            132.39999389648438,
+            105.34799194335938,
+            148.8879852294922
+          ],
+          "order": 3,
+          "text": "minutos.\n",
+          "offset_start": 190,
+          "offset_end": 198,
+          "coordinate_space": "pdf_points",
+          "approximate": false,
+          "is_folio": false
+        },
+        {
+          "bbox": [
+            290.0,
+            794.25,
+            295.55999755859375,
+            807.989990234375
+          ],
+          "order": 4,
+          "text": "1\n",
+          "offset_start": 200,
+          "offset_end": 201,
+          "coordinate_space": "pdf_points",
+          "approximate": false,
+          "is_folio": true
+        }
+      ],
+      "quality": {
+        "characters": 201,
+        "replacement_fraction": 0.0,
+        "ocr_confidence": null,
+        "mixed_image_content": false,
+        "reading_order": "geometric",
+        "offset_basis": "normalized_text"
+      },
+      "status": "ANALYZED",
+      "error": null,
+      "extraction_status": "EXTRACTED",
+      "citation_count": 2,
+      "mapping_complete": true
+    },
+    {
+      "physical_index": 2,
+      "physical_page_number": 3,
+      "printed_label": "2",
+      "raw_text": "Referências\n\n[1] SILVA, Ana. Efeito de pausas na atenção: estudo sintético. CitaLens, 2024. DOI:\n\n10.0000/citalens.demo.\n\n2\n",
+      "normalized_text": "Referências\n\n[1] SILVA, Ana. Efeito de pausas na atenção: estudo sintético. CitaLens, 2024. DOI:\n10.0000/citalens.demo.\n\n2",
+      "extraction_method": "NATIVE",
+      "blocks": [
+        {
+          "bbox": [
+            60.0,
+            55.000022888183594,
+            124.01998901367188,
+            71.48802185058594
+          ],
+          "order": 0,
+          "text": "Referências\n",
+          "offset_start": 0,
+          "offset_end": 11,
+          "coordinate_space": "pdf_points",
+          "approximate": false,
+          "is_folio": false
+        },
+        {
+          "bbox": [
+            60.0,
+            93.6999740600586,
+            506.2678527832031,
+            110.18797302246094
+          ],
+          "order": 1,
+          "text": "[1] SILVA, Ana. Efeito de pausas na atenção: estudo sintético. CitaLens, 2024. DOI:\n",
+          "offset_start": 13,
+          "offset_end": 96,
+          "coordinate_space": "pdf_points",
+          "approximate": false,
+          "is_folio": false
+        },
+        {
+          "bbox": [
+            60.0,
+            113.05001068115234,
+            184.06796264648438,
+            129.5380096435547
+          ],
+          "order": 2,
+          "text": "10.0000/citalens.demo.\n",
+          "offset_start": 97,
+          "offset_end": 119,
+          "coordinate_space": "pdf_points",
+          "approximate": false,
+          "is_folio": false
+        },
+        {
+          "bbox": [
+            290.0,
+            794.25,
+            295.55999755859375,
+            807.989990234375
+          ],
+          "order": 3,
+          "text": "2\n",
+          "offset_start": 121,
+          "offset_end": 122,
+          "coordinate_space": "pdf_points",
+          "approximate": false,
+          "is_folio": true
+        }
+      ],
+      "quality": {
+        "characters": 122,
+        "replacement_fraction": 0.0,
+        "ocr_confidence": null,
+        "mixed_image_content": false,
+        "reading_order": "geometric",
+        "offset_basis": "normalized_text"
+      },
+      "status": "BIBLIOGRAPHIC",
+      "error": null,
+      "extraction_status": "EXTRACTED",
+      "citation_count": 0,
+      "mapping_complete": true
+    }
+  ],
+  "references": [
+    {
+      "id": "2c7a5288-3ce6-57ba-9c10-40b0ecfb2ab6",
+      "raw_text": "[1] SILVA, Ana. Efeito de pausas na atenção: estudo sintético. CitaLens, 2024. DOI:\n10.0000/citalens.demo.",
+      "authors": [
+        "SILVA, Ana"
+      ],
+      "title": "Efeito de pausas na atenção: estudo sintético",
+      "year": 2024,
+      "year_suffix": null,
+      "doi": "10.0000/citalens.demo",
+      "isbn": null,
+      "url": null,
+      "entry_number": 1,
+      "page_start": 3,
+      "page_end": 3,
+      "metadata": {
+        "parser": "conservative-rules-v1",
+        "enrichment": [],
+        "author_institutional": null,
+        "venue": null,
+        "publisher": null,
+        "volume": null,
+        "issue": null,
+        "pages": null,
+        "edition": null,
+        "work_type": null,
+        "unparsed_remainder": "Efeito de pausas na atenção: estudo sintético. CitaLens, 2024. DOI:\n10.0000/citalens.demo.",
+        "ordinal": 0,
+        "bibliography_section": 1
+      },
+      "issues": []
+    }
+  ],
+  "occurrences": [
+    {
+      "id": "3e9ccbcb-5473-5a81-a742-625c3e83a316",
+      "marker": "Silva (2024)",
+      "page_start": 1,
+      "page_end": 1,
+      "offset_start": 69,
+      "offset_end": 81,
+      "sentence": "Silva (2024) observou aumento de 12% na atenção em 40 adultos após pausas de cinco minutos.",
+      "paragraph": "Silva (2024) observou aumento de 12% na atenção em 40 adultos após pausas de cinco\nminutos.",
+      "context": "Silva (2024) observou aumento de 12% na atenção em 40 adultos após pausas de cinco\nminutos.",
+      "reference_ids": [
+        "2c7a5288-3ce6-57ba-9c10-40b0ecfb2ab6"
+      ],
+      "candidate_reference_ids": [
+        "2c7a5288-3ce6-57ba-9c10-40b0ecfb2ab6"
+      ],
+      "binding_status": "RESOLVED",
+      "kind": "AUTHOR_DATE",
+      "metadata": {
+        "groups": [
+          {
+            "reference_ids": [
+              "2c7a5288-3ce6-57ba-9c10-40b0ecfb2ab6"
+            ],
+            "candidate_reference_ids": [
+              "2c7a5288-3ce6-57ba-9c10-40b0ecfb2ab6"
+            ],
+            "status": "RESOLVED"
+          }
+        ],
+        "cross_page": false,
+        "start_position": {
+          "page_number": 1,
+          "offset": 69
+        },
+        "end_position": {
+          "page_number": 1,
+          "offset": 81
+        },
+        "approximate_location": true,
+        "claim_segmentation": "sentence-conservative"
+      },
+      "claim_ids": [
+        "2381ba9e-fa8f-5ce9-8514-ec884914f0a7"
+      ]
+    },
+    {
+      "id": "e43569d2-cd81-5ed8-8e9d-a6f16b905ac4",
+      "marker": "Silva (2024)",
+      "page_start": 2,
+      "page_end": 2,
+      "offset_start": 0,
+      "offset_end": 12,
+      "sentence": "Silva (2024) demonstrou que pausas de cinco minutos causam aumento de 12% na atenção de toda a população.",
+      "paragraph": "Silva (2024) demonstrou que pausas de cinco minutos causam aumento de 12% na\natenção de toda a população.",
+      "context": "Silva (2024) demonstrou que pausas de cinco minutos causam aumento de 12% na\natenção de toda a população.",
+      "reference_ids": [
+        "2c7a5288-3ce6-57ba-9c10-40b0ecfb2ab6"
+      ],
+      "candidate_reference_ids": [
+        "2c7a5288-3ce6-57ba-9c10-40b0ecfb2ab6"
+      ],
+      "binding_status": "RESOLVED",
+      "kind": "AUTHOR_DATE",
+      "metadata": {
+        "groups": [
+          {
+            "reference_ids": [
+              "2c7a5288-3ce6-57ba-9c10-40b0ecfb2ab6"
+            ],
+            "candidate_reference_ids": [
+              "2c7a5288-3ce6-57ba-9c10-40b0ecfb2ab6"
+            ],
+            "status": "RESOLVED"
+          }
+        ],
+        "cross_page": false,
+        "start_position": {
+          "page_number": 2,
+          "offset": 0
+        },
+        "end_position": {
+          "page_number": 2,
+          "offset": 12
+        },
+        "approximate_location": true,
+        "claim_segmentation": "sentence-conservative"
+      },
+      "claim_ids": [
+        "660f52d3-643f-5a42-9877-7b96c2d8b4c8"
+      ]
+    },
+    {
+      "id": "6f0685fe-5fb7-508f-aa10-263c3a20da8b",
+      "marker": "Silva (2024)",
+      "page_start": 2,
+      "page_end": 2,
+      "offset_start": 107,
+      "offset_end": 119,
+      "sentence": "Silva (2024) observou redução de 12% na atenção em 40 adultos após pausas de cinco minutos.",
+      "paragraph": "Silva (2024) observou redução de 12% na atenção em 40 adultos após pausas de cinco\nminutos.",
+      "context": "Silva (2024) observou redução de 12% na atenção em 40 adultos após pausas de cinco\nminutos.",
+      "reference_ids": [
+        "2c7a5288-3ce6-57ba-9c10-40b0ecfb2ab6"
+      ],
+      "candidate_reference_ids": [
+        "2c7a5288-3ce6-57ba-9c10-40b0ecfb2ab6"
+      ],
+      "binding_status": "RESOLVED",
+      "kind": "AUTHOR_DATE",
+      "metadata": {
+        "groups": [
+          {
+            "reference_ids": [
+              "2c7a5288-3ce6-57ba-9c10-40b0ecfb2ab6"
+            ],
+            "candidate_reference_ids": [
+              "2c7a5288-3ce6-57ba-9c10-40b0ecfb2ab6"
+            ],
+            "status": "RESOLVED"
+          }
+        ],
+        "cross_page": false,
+        "start_position": {
+          "page_number": 2,
+          "offset": 107
+        },
+        "end_position": {
+          "page_number": 2,
+          "offset": 119
+        },
+        "approximate_location": true,
+        "claim_segmentation": "sentence-conservative"
+      },
+      "claim_ids": [
+        "541380b5-8434-5550-a130-8ff7325662fe"
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "2381ba9e-fa8f-5ce9-8514-ec884914f0a7",
+      "text": "Silva (2024) observou aumento de 12% na atenção em 40 adultos após pausas de cinco minutos.",
+      "page_start": 1,
+      "page_end": 1,
+      "occurrence_ids": [
+        "3e9ccbcb-5473-5a81-a742-625c3e83a316"
+      ],
+      "reference_ids": [
+        "2c7a5288-3ce6-57ba-9c10-40b0ecfb2ab6"
+      ],
+      "metadata": {
+        "segmentation": "sentence-conservative",
+        "requires_human_review": true
+      }
+    },
+    {
+      "id": "660f52d3-643f-5a42-9877-7b96c2d8b4c8",
+      "text": "Silva (2024) demonstrou que pausas de cinco minutos causam aumento de 12% na atenção de toda a população.",
+      "page_start": 2,
+      "page_end": 2,
+      "occurrence_ids": [
+        "e43569d2-cd81-5ed8-8e9d-a6f16b905ac4"
+      ],
+      "reference_ids": [
+        "2c7a5288-3ce6-57ba-9c10-40b0ecfb2ab6"
+      ],
+      "metadata": {
+        "segmentation": "sentence-conservative",
+        "requires_human_review": true
+      }
+    },
+    {
+      "id": "541380b5-8434-5550-a130-8ff7325662fe",
+      "text": "Silva (2024) observou redução de 12% na atenção em 40 adultos após pausas de cinco minutos.",
+      "page_start": 2,
+      "page_end": 2,
+      "occurrence_ids": [
+        "6f0685fe-5fb7-508f-aa10-263c3a20da8b"
+      ],
+      "reference_ids": [
+        "2c7a5288-3ce6-57ba-9c10-40b0ecfb2ab6"
+      ],
+      "metadata": {
+        "segmentation": "sentence-conservative",
+        "requires_human_review": true
+      }
+    }
+  ],
+  "assessments": [
+    {
+      "id": "annotated-demo-assessment-1",
+      "claim_id": "2381ba9e-fa8f-5ce9-8514-ec884914f0a7",
+      "occurrence_id": "3e9ccbcb-5473-5a81-a742-625c3e83a316",
+      "reference_id": "2c7a5288-3ce6-57ba-9c10-40b0ecfb2ab6",
+      "source_id": "demo-source",
+      "semantic_status": "SUPPORTED",
+      "identity_status": "MATCHED",
+      "access_status": "FULL_TEXT",
+      "rationale": "A fonte sintética informa a mesma amostra, direção e magnitude.",
+      "severity": "LOW",
+      "suggested_adjustment": "Manter o recorte de 40 adultos e o caráter observacional.",
+      "evidence": [
+        {
+          "evidence_id": "demo-evidence",
+          "quote": "Estudo sintético com 40 adultos observou aumento de 12% na atenção após pausas de cinco minutos. O desenho observacional não demonstra causalidade. Os resultados não devem ser generalizados para crianças ou para toda a população."
+        }
+      ],
+      "reviewed_scope": "Parágrafo integral da fonte sintética, página 1.",
+      "limitations": [
+        "Parecer anotado manualmente para demonstração; não é pesquisa real."
+      ]
+    },
+    {
+      "id": "annotated-demo-assessment-2",
+      "claim_id": "660f52d3-643f-5a42-9877-7b96c2d8b4c8",
+      "occurrence_id": "e43569d2-cd81-5ed8-8e9d-a6f16b905ac4",
+      "reference_id": "2c7a5288-3ce6-57ba-9c10-40b0ecfb2ab6",
+      "source_id": "demo-source",
+      "semantic_status": "PARTIALLY_SUPPORTED",
+      "identity_status": "MATCHED",
+      "access_status": "FULL_TEXT",
+      "rationale": "A magnitude está na fonte, mas causalidade e generalização não foram demonstradas.",
+      "severity": "HIGH",
+      "suggested_adjustment": "Descrever associação em 40 adultos, sem generalizar para toda a população.",
+      "evidence": [
+        {
+          "evidence_id": "demo-evidence",
+          "quote": "Estudo sintético com 40 adultos observou aumento de 12% na atenção após pausas de cinco minutos. O desenho observacional não demonstra causalidade. Os resultados não devem ser generalizados para crianças ou para toda a população."
+        }
+      ],
+      "reviewed_scope": "Parágrafo integral da fonte sintética, página 1.",
+      "limitations": [
+        "Parecer anotado manualmente para demonstração; não é pesquisa real."
+      ]
+    },
+    {
+      "id": "annotated-demo-assessment-3",
+      "claim_id": "541380b5-8434-5550-a130-8ff7325662fe",
+      "occurrence_id": "6f0685fe-5fb7-508f-aa10-263c3a20da8b",
+      "reference_id": "2c7a5288-3ce6-57ba-9c10-40b0ecfb2ab6",
+      "source_id": "demo-source",
+      "semantic_status": "CONTRADICTED",
+      "identity_status": "MATCHED",
+      "access_status": "FULL_TEXT",
+      "rationale": "A fonte registra aumento de 12%, enquanto a afirmação declara redução de 12%.",
+      "severity": "HIGH",
+      "suggested_adjustment": "Substituir redução por aumento, preservando amostra e condições.",
+      "evidence": [
+        {
+          "evidence_id": "demo-evidence",
+          "quote": "Estudo sintético com 40 adultos observou aumento de 12% na atenção após pausas de cinco minutos. O desenho observacional não demonstra causalidade. Os resultados não devem ser generalizados para crianças ou para toda a população."
+        }
+      ],
+      "reviewed_scope": "Parágrafo integral da fonte sintética, página 1.",
+      "limitations": [
+        "Parecer anotado manualmente para demonstração; não é pesquisa real."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "demo-source",
+      "reference_id": "2c7a5288-3ce6-57ba-9c10-40b0ecfb2ab6",
+      "title": "Efeito de pausas na atenção: estudo sintético",
+      "identity_status": "MATCHED",
+      "access_status": "FULL_TEXT",
+      "version": "1",
+      "url": "https://example.invalid/synthetic-source",
+      "accessed_at": "fixture; sem acesso externo",
+      "content_hash": "321d793e4fac3b541cb22bf7e8d6cd2234279f91be8f7969a91669deccddcb53",
+      "limitations": [
+        "Fonte fictícia; DOI 10.0000/citalens.demo não é identificador real."
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "demo-evidence",
+      "source_id": "demo-source",
+      "text": "Estudo sintético com 40 adultos observou aumento de 12% na atenção após pausas de cinco minutos. O desenho observacional não demonstra causalidade. Os resultados não devem ser generalizados para crianças ou para toda a população.",
+      "page_start": 1,
+      "page_end": 1,
+      "section": "Resultados sintéticos"
+    }
+  ],
+  "warnings": [
+    "Parser conservador: revise segmentação, autores institucionais, metadados ausentes e bibliografias por capítulo.",
+    "Detecção por regras; ausência de ocorrência detectada não implica erro. Afirmações são segmentadas por frase e exigem revisão quando compostas.",
+    "Sobrescritos Unicode são reconhecidos; sobrescritos representados apenas por posição gráfica podem exigir revisão humana."
+  ]
+}

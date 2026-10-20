@@ -1,0 +1,40 @@
+use_default_settings:
+  engines:
+    # Keep only tested API engines; do not initialize Tor engines or blocked
+    # web scrapers, including their shared image/video network dependencies.
+    keep_only:
+      - mwmbl
+      - arxiv
+      - pubmed
+engines:
+  - name: mwmbl
+    disabled: false
+    categories: [general, science]
+  - name: arxiv
+    disabled: false
+    categories: [general, science]
+  - name: pubmed
+    disabled: false
+    categories: [general, science]
+# The pinned SearXNG version reactivates DOI rewriting from this preference,
+# even when its plugin is inactive. CitaLens resolves DOI through its own APIs.
+default_doi_resolver: ""
+preferences:
+  lock:
+    - doi_resolver
+general:
+  debug: false
+  instance_name: CitaLens Search
+search:
+  safe_search: 1
+  autocomplete: ""
+  formats:
+    - html
+    - json
+server:
+  limiter: false
+  public_instance: false
+  image_proxy: false
+outgoing:
+  request_timeout: 10.0
+  max_request_timeout: 20.0
